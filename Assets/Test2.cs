@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//以下の{}内は「ボスの処理」に関する変数と関数
 public class Boss
 {
+    //↓「pribate」だから、Bossクラス内でしか使えない
     private int hp = 100;
     private int power = 25;
     private int mp = 53;
 
+    //↓「public」だから、Bossクラス以外でも使える
     public void Attack()
     {
         Debug.Log(this.power + "のダメージを与えた");
@@ -16,26 +19,26 @@ public class Boss
     public void Defence(int damage)
     {
         Debug.Log(damage + "のダメージを受けた");
+        //残りhpを減らす
         this.hp -= damage;
     }
 
-    public void Magic(int mpzan)
+    public void Magic()
     {
-        
-        string mpkekka = (mpzan >= 5) ? "魔法攻撃をした。残りMPは〇〇。" : "MPが足りないため、魔法が使えない。";
-        Debug.Log(mpkekka);
-
-
-        //＜mpを消費して魔法攻撃をするMagic関数を作る＞
-
-        //　mp5以上　　→　「mp5減らし」+「"魔法攻撃をした。残りMPは〇〇。"」 　＜3個処理＞
-        //　mp5より下　→　「"MPが足りないため、魔法が使えない。"」　　　　  　　＜1個処理＞
-
-        //「5以上」と「5より下」のif文で「2択の処理」　※「mp5減らす」のは↓の呼び出し元？
-
-        //　for文の「合計値を求めるスクリプト」を応用すればMPの残量も出せるかも
-        //　メモ　→　Debug.Log("魔法攻撃をした。残りMPは" + 〇〇 + "。");
-
+        for (int i = mp; i >= 3; i-=5)
+        {
+            //↓ボツ
+            //int mpzan = i;
+            //if (mpzan >= 5)
+            if (i >= 5)
+            {
+                Debug.Log("魔法攻撃をした。残りMPは〇〇。");
+            }
+            else
+            {
+                Debug.Log("MPが足りないため、魔法が使えない。");
+            }
+        }
     }
 }
 
@@ -44,21 +47,14 @@ public class Test2 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //lastboss変数に対してボスの実態を作り(代入し)、この{}内で「ボスの処理」を呼び出せるようにした
         Boss lastboss = new Boss();
 
-        lastboss.Attack();
-        lastboss.Defence(3);
+        //↓Bossクラスのメンバ関数を使う時は「変数名.関数名」と記述
 
-        for (int i = 53; i < 5; i-=5)
-        {
-            lastboss.Magic(i);
-        }
-        
-
-        //条件①　Magic関数を呼び出して魔法を使う
-        //条件②　Magic関数を10回使った後、Magic関数を呼び出すと「mpが足りない〜」表示　　　　　　
-
-        //　MPを5ずつ11回減らす「for文」
+        lastboss.Attack();　　　//Bossクラスの「Attack関数」を呼び出して{}内の処理を実行
+        lastboss.Defence(3);　　//Bossクラスの「Defence関数」に3を代入して呼び出し{}内の処理を実行
+        lastboss.Magic();
 
     }
 
