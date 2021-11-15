@@ -27,13 +27,13 @@ public class Boss
     {
         if (mp >= 5)
         {
-            Debug.Log("魔法攻撃をした。残りMPは" + mp + "。"); 
+            Debug.Log("魔法攻撃をした。残りMPは" + mp + "。");
+            this.mp -= syouhimp;
         }
         else
         {
             Debug.Log("MPが足りないため、魔法が使えない。");
         }
-        this.mp -= syouhimp;
     }
 }
 
