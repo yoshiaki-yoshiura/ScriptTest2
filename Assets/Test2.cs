@@ -8,7 +8,7 @@ public class Boss
     //↓「pribate」だから、Bossクラス内でしか使えない
     private int hp = 100;
     private int power = 25;
-    //private int mp = 53;
+    private int mp = 53;
 
 
     //↓「public」だから、Bossクラス以外でも使える
@@ -20,10 +20,10 @@ public class Boss
     public void Defence(int damage)
     {
         Debug.Log(damage + "のダメージを受けた");
-        this.hp -= damage;  　//残りhpを減らす　←これってもしかしてmp消費のヒント？（←結局関係無い）
+        this.hp -= damage;  　//残りhpを減らす　←これってmp消費のヒント？
     }
 
-    public void Magic(int mp)　　　　//←Magic関数内でmpを5以上の場合は5減らす + 文字列表示
+    public void Magic(int syouhimp)　　　　//←Magic関数内でmpを5以上の場合は5減らす + 文字列表示
     {
         if (mp >= 5)
         {
@@ -33,6 +33,7 @@ public class Boss
         {
             Debug.Log("MPが足りないため、魔法が使えない。");
         }
+        this.mp -= syouhimp;
     }
 }
 
@@ -48,14 +49,11 @@ public class Test2 : MonoBehaviour
         lastboss.Attack();　　　//Bossクラスの「Attack関数」を呼び出して{}内の処理を実行
         lastboss.Defence(3);　　//Bossクラスの「Defence関数」に3を代入して呼び出し{}内の処理を実行
 
-        for (int mp = 53; mp >= 3; mp -= 5)　　　//ここでMagic関数を「11回」呼び出す処理
+        for (int i = 0; i < 11; i++)　　　//ここでMagic関数を「11回」呼び出す処理
         {
-            lastboss.Magic(mp);
+            lastboss.Magic(5);
         }
 
-        //ボツ　for (int i = mp; i >= 3; i-=5)　←これだとmpではなくiが減っている。
-        //{
-        //}
 }
 
     void Update()
